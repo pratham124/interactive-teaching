@@ -24,7 +24,7 @@ terminal, it runs in a local page that looks like a chalkboard.
 Clone into your Claude Code skills folder:
 
 ```sh
-git clone https://github.com/<your-username>/interactive-teaching ~/.claude/skills/interactive-teaching
+git clone https://github.com/pratham124/interactive-teaching ~/.claude/skills/interactive-teaching
 ```
 
 On Windows, the folder is `%USERPROFILE%\.claude\skills\interactive-teaching`. You also need
