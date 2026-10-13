@@ -1,0 +1,133 @@
+/* Shared workbook styles. Local system fonts keep the classroom fast and usable offline. */
+:root {
+  --bg:#fcfdfb; --ink:#243c34; --ink-2:#52685e; --ink-3:#64786d; --rule:#d5ded7;
+  --accent:#27634b; --accent-soft:#e9f2eb; --ok:#27634b; --ok-soft:#e4f1e8; --bad:#9f433d; --bad-soft:#faeae6;
+  --surface:#f1f5ef; --exercise:#f8faf6; --sans:"Segoe UI Variable","Segoe UI",system-ui,sans-serif;
+  --serif:var(--sans); --mono:"Cascadia Code",Consolas,ui-monospace,monospace; color-scheme:light;
+}
+* { box-sizing:border-box; }
+html { background:var(--bg); }
+body { margin:0 auto; max-width:49rem; padding:34px 35px 65px; font:16px/1.75 var(--sans); color:var(--ink); background:var(--bg); }
+h1,h2,h3 { font-weight:650; line-height:1.3; letter-spacing:-.025em; }
+h1 { font-size:clamp(25px,3vw,32px); margin:0 0 20px; max-width:27ch; }
+h2 { font-size:21px; margin:34px 0 12px; }h3 { font-size:18px; margin:25px 0 10px; }
+p { margin:0 0 16px; }p,li { max-width:64ch; }
+a { color:var(--accent); text-underline-offset:3px; }
+code,pre { font-family:var(--mono); font-size:.85em; }
+code { background:var(--surface); padding:.15em .35em; border-radius:3px; }
+pre { background:var(--surface); padding:20px; border-left:3px solid var(--rule); border-radius:0 6px 6px 0; overflow-x:auto; line-height:1.8; margin:22px 0; }
+pre code { background:none; padding:0; }
+img,svg,video { max-width:100%; }hr { border:0; border-top:1px solid var(--rule); margin:30px 0; }
+table { border-collapse:collapse; width:100%; font-size:.95rem; }th,td { text-align:left; padding:10px; border-bottom:1px solid var(--rule); vertical-align:top; }
+.kicker { font:600 11px/1.5 var(--sans); letter-spacing:.08em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.win { margin:0 0 30px; padding:16px 18px; border-left:3px solid var(--accent); border-radius:0 5px 5px 0; background:var(--accent-soft); font:14px/1.65 var(--sans); }
+.win b { font-weight:650; }.source { margin:28px 0; padding:18px; border:1px solid var(--rule); border-radius:7px; font-size:14px; }.source .kicker { display:block; margin-bottom:6px; }
+.cite { font-size:.75em; vertical-align:super; text-decoration:none; }.sidenote { font-size:14px; color:var(--ink-2); border-left:2px solid var(--rule); padding-left:16px; }
+.ask { padding-top:22px; margin-top:30px; border-top:1px solid var(--rule); font-size:13px; color:var(--ink-2); }
+nav.lesson-links { display:flex; justify-content:space-between; gap:16px; margin-top:35px; font-size:14px; }
+/* Exercises are distinct from reading. Existing kit markup and report behavior are preserved. */
+.tq-quiz,.tq-recall,.tq-fill { margin:26px 0; padding:21px; border:1px solid var(--rule); border-radius:8px; background:var(--exercise); font:14px/1.65 var(--sans); }
+.tq-prompt { margin:0 0 15px; font-weight:600; }
+.tq-choices { list-style:none; margin:0; padding:0; display:grid; gap:8px; counter-reset:choice; }
+.tq-choices li { max-width:none; }
+.tq-choice { display:flex; gap:12px; align-items:baseline; width:100%; text-align:left; font:inherit; padding:12px 14px; border:1px solid var(--rule); border-radius:6px; background:var(--bg); color:var(--ink); cursor:pointer; counter-increment:choice; }
+.tq-choice::before { content:counter(choice,upper-alpha); font-size:11px; font-weight:650; color:var(--ink-2); }
+.tq-choice:hover:not(:disabled) { border-color:var(--accent); background:var(--accent-soft); }.tq-choice:disabled { cursor:default; }
+.tq-choice.tq-right { border-color:var(--ok); background:var(--ok-soft); }.tq-choice.tq-wrong { border-color:var(--bad); background:var(--bad-soft); }
+.tq-choice.tq-wrong:disabled { color:var(--ink-2); text-decoration:line-through; text-decoration-color:var(--bad); }
+.tq-feedback { margin:14px 0 0; color:var(--ink-2); font-size:14px; }.tq-feedback:empty { margin:0; }
+.tq-explain,.tq-model { display:none; margin:14px 0 0; color:var(--ink-2); font-size:14px; }.tq-done .tq-explain,.tq-done .tq-model { display:block; }
+.tq-verdict { font-weight:650; margin-right:6px; }.tq-verdict.ok { color:var(--ok); }.tq-verdict.no { color:var(--bad); }
+.tq-recall textarea { width:100%; min-height:120px; font:inherit; color:var(--ink); padding:14px; border:1px solid var(--rule); border-radius:6px; background:var(--bg); resize:vertical; }
+.tq-recall button.tq-submit,.tq-fill button.tq-submit { margin-top:10px; font:600 13px var(--sans); padding:10px 15px; border-radius:6px; border:1px solid var(--accent); background:var(--accent); color:var(--bg); cursor:pointer; }
+.tq-submit:disabled { opacity:.5; cursor:default!important; }.tq-fill pre { margin:0 0 10px; }
+input.tq-blank { font:inherit; color:var(--ink); padding:3px 7px; margin:0 3px; border:1px solid var(--ink-3); border-radius:4px; background:var(--bg); max-width:100%; }
+input.tq-blank.tq-right { border-color:var(--ok); background:var(--ok-soft); }input.tq-blank.tq-wrong { border-color:var(--bad); background:var(--bad-soft); }
+.tq-sent { margin-top:10px; font-size:13px; color:var(--accent); }.tq-model[tabindex] { margin-top:14px; }
+.tq-sr { position:absolute; width:1px; height:1px; margin:-1px; padding:0; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap; border:0; }
+button:focus-visible,textarea:focus-visible,a:focus-visible,input:focus-visible,.tq-feedback:focus-visible,.tq-model:focus-visible { outline:3px solid var(--accent); outline-offset:3px; }
+.tq-score { font-size:13px; color:var(--ink-2); margin-top:28px; padding-top:16px; border-top:1px solid var(--rule); }
+@media(max-width:500px) { body { padding:26px 20px 45px; font-size:15px; }.tq-quiz,.tq-recall,.tq-fill { padding:16px; }pre { padding:15px; } }
+@media print { :root { --bg:#fff; --ink:#222; --ink-2:#444; --ink-3:#555; --rule:#bbb; --accent:#234b38; --accent-soft:#f4f7f1; --surface:#f4f4f4; --exercise:#fff; color-scheme:light; }body { max-width:none; padding:0; }.ask,nav.lesson-links { display:none; }.tq-quiz,.tq-recall,.tq-fill,pre { break-inside:avoid; } }
+
+@font-face {font-family:Outfit; font-weight:400 700; font-style:normal; font-display:swap; src:url(./outfit.woff2) format('woff2');}
+
+:root { --bg:#fffef9; --ink:#202b29; --ink-2:#55605c; --ink-3:#67706a; --rule:#d9dcd0; --accent:#355e43; --accent-soft:#edf1e4; --surface:#f0f3e7; --exercise:#f8f8ee; --sans:Outfit,"Segoe UI",system-ui,sans-serif; }
+body { padding:30px 35px 65px; font-size:16px; line-height:1.78; max-width:52rem; }
+body>main { position:relative; padding-left:17px; }
+body>main::before { content:""; position:absolute; left:-5px; top:0; bottom:0; border-left:1px solid #c9d5be; }
+h1 { font-family:var(--sans); font-size:36px; font-weight:500; max-width:100%; letter-spacing:-1px; }
+h2 { font-size:23px; font-weight:500; line-height:1.25; margin-top:32px; letter-spacing:-.45px; }
+.in-classroom body>main>h1,.in-classroom body>main>.kicker { display:none; }
+.win { background:transparent; border:0; padding:0 0 22px; border-bottom:1px solid #d9dfca; border-radius:0; font-size:15px; color:#4c5a45; margin-bottom:26px; line-height:1.65; }
+pre { position:relative; background:#e9efd9; border:1px solid #cfd9ba; border-radius:7px; padding:21px 23px; color:#304528; font-size:12px; box-shadow:3px 3px 0 #dfe4d2; }
+.tq-quiz,.tq-recall,.tq-fill { background:#f6f7ed; border:1px solid #cfd8c0; border-radius:9px; padding:22px; box-shadow:0 3px 0 #e5e9dc; }
+.tq-prompt { font-size:16px; font-weight:500; letter-spacing:-.2px; }
+.tq-choice { background:#fffef9; border-color:#d1d8c7; border-radius:6px; padding:13px; font-size:14px; font-weight:400; }
+.tq-choice:hover:not(:disabled) { background:#eef2e3; transform:translateX(3px); }
+.tq-choice::before { color:#5e7350; font-weight:500; }
+.tq-recall textarea { background:#fffef9; border-color:#cdd6bf; }
+.tq-recall button.tq-submit,.tq-fill button.tq-submit { border-radius:100px; padding:11px 18px; font-weight:500; }
+@media print {body>main::before{display:none;} .in-classroom body>main>h1,.in-classroom body>main>.kicker{display:block;} }
+
+/* Classroom theme: lessons as paper pinned to the slate board. The win and the worked examples are small
+   slates in chalk; practice consoles sit in a walnut frame. Appended last so it restyles without touching
+   the rules above. */
+@font-face { font-family: Outfit; font-weight: 400 700; font-style: normal; font-display: swap; src: url(outfit.woff2) format("woff2"); }
+:root {
+  --bg: #fbf9f4; --ink: #22302a; --ink-2: #55605a; --ink-3: #7b847d; --rule: #e2dccb;
+  --accent: #2f5a45; --accent-soft: #e8efe6; --ok: #2f6b47; --ok-soft: #e3f0e3; --bad: #9a3a2c; --bad-soft: #f8e7e2;
+  --slate: #263d32; --slate-hi: #2f4a3d; --chalk: #eeebe0; --chalk-2: #c5cdc0; --chalk-3: #97a698; --chalk-yellow: #e8d48c;
+  --walnut: #5a391f; --walnut-lo: #2c1b0f; --brass: #c2a062;
+  --serif: "Palatino Linotype", "Book Antiqua", Palatino, "URW Palladio L", Georgia, serif;
+  --sans: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --mono: "Cascadia Code", Consolas, ui-monospace, monospace;
+}
+body { font: 1.06rem/1.7 var(--serif); color: var(--ink); }
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: 0; color: var(--ink); }
+h1 { font-size: clamp(1.9rem, 3.4vw, 2.4rem); line-height: 1.15; }
+h2 { font-size: 1.5rem; margin-top: 2.8rem; }
+.kicker { font: italic 400 .95rem/1.4 var(--serif); letter-spacing: 0; text-transform: none; color: var(--accent); }
+code { background: #edf0e8; color: #24382e; }
+a { color: var(--accent); }
+
+/* The win: a small slate */
+.win { background: var(--slate); color: var(--chalk); border: 0; border-radius: 3px; padding: 1rem 1.2rem;
+  box-shadow: 0 0 0 4px var(--walnut), 0 0 0 5px var(--walnut-lo), 0 6px 14px #00000030; margin: 1.4rem 5px 2.2rem; }
+.win b { color: var(--chalk-yellow); font-weight: 500; }
+.win code { background: #ffffff14; color: var(--chalk); }
+.win a { color: var(--chalk-yellow); }
+
+/* Worked examples: written on the board */
+pre { background: var(--slate); color: var(--chalk); border: 0; border-radius: 3px; line-height: 1.6;
+  box-shadow: inset 0 0 30px #00000030; text-shadow: 0 0 1px #eeebe040; }
+pre code { color: inherit; background: none; }
+pre .code-note { color: var(--chalk-3); }
+pre a { color: var(--chalk-yellow); }
+pre input.tq-blank { background: #fbf9f4; color: var(--ink); text-shadow: none; }
+
+/* Exercises: index cards on the paper */
+.tq-quiz, .tq-recall, .tq-fill { background: #fffdf8; border: 1px solid var(--rule); border-radius: 4px;
+  box-shadow: 0 1px 0 #00000008, 0 4px 12px #2c1b0f0c; font-family: var(--sans); }
+.tq-choice { background: #fbf9f4; }
+.tq-choice:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
+.tq-recall textarea { background: #fbf9f4; }
+.tq-recall button.tq-submit, .tq-fill button.tq-submit { background: var(--accent); border-color: var(--accent); border-radius: 4px; }
+.source { background: #fffdf8; border: 1px solid var(--rule); border-left: 3px solid var(--brass); border-radius: 2px 4px 4px 2px; }
+.source .kicker { color: #7a5a1f; }
+.sidenote { border-left-color: #c9c1aa; }
+.ask { font-family: var(--sans); }
+
+* { scrollbar-width: thin; scrollbar-color: #22302a30 transparent; }
+pre { scrollbar-color: #eeebe050 transparent; }
+
+@media print {
+  .win, pre { background: #fff; color: var(--ink); box-shadow: none; border: 1px solid var(--rule); text-shadow: none; }
+  .win b { color: var(--ink); } pre .code-note { color: var(--ink-3); }
+}
+
+/* Fit the column: code wraps instead of growing a horizontal scrollbar. */
+pre, pre code { white-space: pre-wrap; overflow-wrap: break-word; }
+pre { overflow-x: visible; }
+p, li, td, .tq-prompt, .tq-choice, .win, .source { overflow-wrap: break-word; }
+table { display: block; max-width: 100%; overflow-x: auto; }

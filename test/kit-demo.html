@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quiz kit demo</title>
+<link rel="stylesheet" href="../kit/teach.css">
+<script src="../kit/teach-quiz.js" defer></script>
+</head>
+<body>
+<main>
+  <span class="kicker">Kit demo</span>
+  <h1>Quiz kit demo</h1>
+
+  <div class="tq-quiz" data-id="mc-diagnostic">
+    <p class="tq-prompt">Which line moves the String?</p>
+    <ol class="tq-choices">
+      <li data-feedback="clone() makes a deep copy, so a is still valid afterwards. Nothing is moved." data-misconception="clone-is-move">let b = a.clone();</li>
+      <li data-feedback="&amp;a only borrows; the String stays owned by a." data-misconception="borrow-is-move">let b = &amp;a;</li>
+      <li data-correct>let b = a;</li>
+    </ol>
+    <p class="tq-explain">Assignment moves; clone copies the heap data.</p>
+  </div>
+
+  <div class="tq-quiz" data-id="mc-single" data-attempts="1">
+    <p class="tq-prompt">One try only: what does 2 + 2 equal?</p>
+    <ol class="tq-choices">
+      <li data-misconception="off-by-one" data-feedback="Should not be shown in single-attempt mode.">5</li>
+      <li data-correct>4</li>
+    </ol>
+    <p class="tq-explain">Two plus two is four.</p>
+  </div>
+
+  <div class="tq-fill" data-id="sum-by-region">
+    <p class="tq-prompt">Complete the query.</p>
+    <pre><code>SELECT region, <span class="tq-blank" data-answer="SUM(amount)" data-accept="total(amount)" data-hint="Which function adds up a column?" data-misconception="count-vs-sum"></span>
+FROM orders GROUP BY <span class="tq-blank" data-answer="region"></span>;</code></pre>
+    <p class="tq-explain">SUM adds the values; GROUP BY makes one row per region.</p>
+  </div>
+
+  <div class="tq-recall" data-id="recall-1">
+    <p class="tq-prompt">In one sentence: why does Rust move instead of copy?</p>
+    <p class="tq-model">So exactly one owner frees the heap allocation.</p>
+  </div>
+</main>
+</body>
+</html>

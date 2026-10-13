@@ -1,0 +1,169 @@
+{
+  "skill_name": "interactive-teaching",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "/interactive-teaching I want to learn enough SQL to answer my own questions about our sales data",
+      "files": [],
+      "expected_output": "Classroom initialised, 1-3 mission questions on screen with options and a recommendation, server started, URL reported in one line.",
+      "assertions": [
+        "A .teach/state.json exists in the workspace and assets/teach.css and assets/teach-quiz.js were created",
+        "Asks only the two or three questions that most change the first lesson (not a full questionnaire), in the classroom's general thread",
+        "The questions probe the concrete goal, current experience and where they will practise",
+        "The message reads like a warm teacher getting going, not an onboarding form",
+        "A provisional MISSION.md exists with assumptions marked (assumed)",
+        "If a starter lesson is drafted, it targets a first win on a made-up but realistic sales table (pass if a starter lesson was reasonably skipped with a stated reason)",
+        "The server was started and a 127.0.0.1 URL was obtained, and agent.handled acked",
+        "The terminal message tells the learner where the classroom is and how it works, briefly"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "/interactive-teaching resume (workspace with one unhandled send: 1/3 quiz, weak recall, a quotes question, Next lesson 'totals per region')",
+      "files": [
+        "fixtures/sql-after-lesson-1"
+      ],
+      "expected_output": "Pending send fully handled: recall graded honestly, question answered in the lesson thread, lesson scored 1/3, evidence-based records, next lesson on GROUP BY started with retrieval of the missed quoting items, ack last.",
+      "assertions": [
+        "Lesson 0001 has score 1/3",
+        "The recall answer gets feedback grading it partly right and saying WHERE runs before SELECT",
+        "The quotes question gets a direct answer (rule, example, what goes wrong)",
+        "A new lesson exists (drafting) whose goal is totals per region / GROUP BY",
+        "The next lesson's brief asks for diagnostic practice on the missed quoting items (feedback per wrong answer / misconception slugs)",
+        "Learning records are atomic: separate records for unquoted text, unquoted dates and WHERE order (not one combined record)",
+        "No learning record claims mastery the evidence does not show",
+        "Something the learner can use now is made in the same turn (a reference sheet, or a fix to lesson 1's give-away answers or missing explanations)",
+        "One overall message on lesson 0001 ties the send together (how it went, focus, what's next)",
+        "The terminal recap is short and points to the classroom",
+        "agent.handled is 1 and agent.status is waiting at the end"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Write lesson 0002 (GROUP BY + SUM per region for a date range) for the SQL learner",
+      "files": [
+        "fixtures/sql-after-lesson-1"
+      ],
+      "expected_output": "One short, cited lesson using the quiz kit, with a recall item and retrieval of lesson-1 weak spots.",
+      "assertions": [
+        "lessons/0002-totals-per-region.html exists and links ../assets/teach.css and ../assets/teach-quiz.js",
+        "The lesson states one win near the top",
+        "At least one item retrieves a lesson-1 weak spot (quoted string/date literals or WHERE order)",
+        "It cites at least one external source with a link and names one primary source",
+        "It links back to lesson 0001",
+        "Prose is short: under ~900 words, not counting code and quiz items",
+        "It uses the real orders table columns in examples",
+        "In every .tq-quiz, choices are the same length (longest <= 1.15x shortest in characters)",
+        "A warm-up retrieval item on lesson 1 comes before the new material",
+        "Quiz items are spread through the lesson: at least two concept sections are each followed by their own check, not all items in one block at the end",
+        "It has a 'your turn' production step and a 'try it for real' step outside the page",
+        "Wrong multiple-choice options carry data-feedback and data-misconception (diagnostic, not generic)",
+        "Practice is scaffolded: at least one tq-fill before writing the query from memory (tq-recall)",
+        "There is an explore widget (something to play with) before the learner must demonstrate independently"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "/interactive-teaching resume (lesson 2 send repeats the unquoted-text misconception already on record; learner asks for a trick to remember)",
+      "expected_output": "Teacher recognises the recurring misconception, links it to record 0002, adds the new evidence there (no duplicate record), gives a memorable fix, and makes the next lesson keep retrieving it.",
+      "files": [
+        "fixtures/sql-after-lesson-2"
+      ],
+      "assertions": [
+        "The reply or round-up tells the learner this is the same quoting slip as lesson 1 (recognises recurrence), not as if it were new",
+        "The learner's 'trick to remember' question gets a concrete, memorable rule or mnemonic tied to their own data",
+        "learning-records/0002-not-yet-unquoted-text.md gains the new evidence (send 2, filter-west); no duplicate unquoted-text record is created",
+        "The unquoted-date record is not marked fixed or superseded (send 2 has no evidence about dates); records stay one misconception each",
+        "Lesson 0002 is done and scored 2/3",
+        "The next lesson (top customers) is added and its brief asks for retrieval of unquoted-text with targeted feedback",
+        "The terminal recap is short (no more than ~6 lines) and points to the classroom",
+        "agent.handled is 2 and status waiting"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "/interactive-teaching I want to learn beginner yoga to loosen up my stiff lower back, I sit at a desk all day",
+      "expected_output": "",
+      "files": [],
+      "assertions": [
+        "Asks only two or three questions, and they include safety (current pain, injuries, medical advice) given the back",
+        "A provisional MISSION.md exists with assumptions marked (assumed)",
+        "The starter lesson is a guided sequence of real-world steps (poses) with what to notice and how to do each safely, not a reading lesson",
+        "The lesson includes clear stop/see-a-professional guidance (sharp pain, numbness, symptoms) and does not overclaim medical benefit",
+        "Claims are grounded in cited high-trust sources (health services, clinical guidance, recognised yoga/physio bodies), with one primary source named",
+        "Checks fit the topic: recall or multiple choice about cues and safety with targeted feedback; no forced code-style exercise or contrived widget",
+        "No database, server or tooling was installed or started to build the lesson (other than the classroom server)",
+        "The classroom is set up (server, URL, ack) and the terminal message briefly explains where it is and how it works",
+        "The starter lesson passes check-lesson with no errors",
+        "The lesson follows the arc: prior knowledge (warm-up, or a baseline question in a first lesson) first, a check after each concept section, and independent application at the end",
+        "The lesson ends with the learner producing or performing the objective unaided (a recall/written task or a real-world task with how to tell it worked), not with multiple choice",
+        "Any custom widget makes something observable that prose and an exercise could not, and serves the objective (or there is none and none was needed)",
+        "check-lesson --render passes: every item renders, responds and reports exactly once, with no script errors"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "/interactive-teaching resume (Spanish: lesson 2 send repeats ser-vs-estar in a quiz and a recall; learner asks why location takes estar if the bathroom is always there)",
+      "expected_output": "",
+      "files": [
+        "fixtures/spanish-after-lesson-2"
+      ],
+      "assertions": [
+        "Tells the learner this is the same ser/estar slip as lesson 1 (recognises recurrence across the quiz and the recall)",
+        "Answers 'the bathroom is always there' directly: location takes estar regardless of permanence (with an example)",
+        "The recall '\u00bfD\u00f3nde es el ba\u00f1o?' gets feedback that it should be est\u00e1, tied to the same rule",
+        "learning-records/0001-not-yet-ser-vs-estar.md gains the new evidence and stays active; no duplicate ser-vs-estar record",
+        "Lesson 0002 is done and scored 1/2 (first attempts)",
+        "The next lesson (asking for the bill) is added, and its brief has a concrete plan that keeps retrieving ser-vs-estar with expected wrong answers",
+        "Lessons 0001 and 0002 keep their existing quiz choices",
+        "No database, server or tooling was installed or started to check the Spanish",
+        "The terminal recap is short and points to the classroom; agent.handled is 2"
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "/interactive-teaching I'm a designer, my team uses GitHub for our design system repo and I keep messing up branches. I want to stop being scared of git",
+      "expected_output": "",
+      "files": [],
+      "assertions": [
+        "Asks only two or three questions, including how they use git (command line, GitHub Desktop, VS Code) since that changes every lesson; or proceeds with that assumption clearly marked and the starter kept tool-neutral",
+        "A provisional MISSION.md exists with assumptions marked (assumed)",
+        "The starter lesson is safe: it teaches read-only or recoverable commands first, and anything destructive (reset --hard, force push) is absent or carries a clear warning",
+        "Facts come from official docs (git-scm.com, GitHub Docs), cited, with one primary source named",
+        "The starter lesson passes check-lesson with no errors",
+        "Practice is diagnostic: wrong choices carry targeted feedback and a misconception slug (e.g. commit vs push)",
+        "The lesson has one primary objective; other git topics are left for later",
+        "Nothing was installed (git itself, servers, tools) beyond the classroom server; the terminal message briefly explains the classroom",
+        "The lesson follows the arc: prior knowledge (warm-up, or a baseline question in a first lesson) first, a check after each concept section, and independent application at the end",
+        "The lesson ends with the learner producing or performing the objective unaided (a recall/written task or a real-world task with how to tell it worked), not with multiple choice",
+        "Any custom widget makes something observable that prose and an exercise could not, and serves the objective (or there is none and none was needed)",
+        "check-lesson --render passes: every item renders, responds and reports exactly once, with no script errors"
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Write lesson 0002 (list comprehensions: transform and filter sales rows) for the Python learner",
+      "expected_output": "",
+      "files": [
+        "fixtures/python-after-lesson-1"
+      ],
+      "assertions": [
+        "lessons/0002-*.html passes check-lesson with no errors",
+        "One primary objective (list comprehensions that transform and filter); no unrelated topics such as lambda, map, generators or dict comprehensions taught",
+        "Opens with a warm-up retrieving lesson 1's weak spots (range-end-inclusive, append-returns-list) before new material",
+        "Every concept section is followed by its own check, not all items in one block at the end",
+        "A predict-the-output exercise on a concrete list, with wrong predictions mapped to the mistakes that produce them",
+        "Wrong choices carry targeted feedback and misconception slugs, reusing the existing slugs where relevant",
+        "Scaffolded production: a fill-in before writing a comprehension from memory",
+        "Claims cite the official Python docs, with one primary source named",
+        "Uses the learner's sales rows ([(region, amount), ...]) in examples",
+        "Ends with a step to try for real in their own notebook or data",
+        "check-lesson reports no uneven-length warnings on multiple-choice items",
+        "The lesson follows the arc: prior knowledge (warm-up, or a baseline question in a first lesson) first, a check after each concept section, and independent application at the end",
+        "The lesson ends with the learner producing or performing the objective unaided (a recall/written task or a real-world task with how to tell it worked), not with multiple choice",
+        "Any custom widget makes something observable that prose and an exercise could not, and serves the objective (or there is none and none was needed)",
+        "check-lesson --render passes: every item renders, responds and reports exactly once, with no script errors"
+      ]
+    }
+  ]
+}
